@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../models/recipe_model.dart';
 import '../utils/app_theme.dart';
 import '../utils/constants.dart';
+import 'animation_widgets.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
@@ -22,43 +23,46 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildImage(),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTitle(),
-                  const SizedBox(height: 4),
-                  _buildSubtitle(),
-                  const SizedBox(height: 8),
-                  _buildTags(),
-                  if (!isCompact) ...[
-                    const SizedBox(height: 8),
-                    _buildActionButton(context),
-                  ],
-                ],
-              ),
+    return Hero(
+      tag: 'recipe-${recipe.id}',
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
           ],
+        ),
+        child: RippleEffect(
+          onTap: onTap,
+          borderRadius: 12,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildImage(),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitle(),
+                    const SizedBox(height: 4),
+                    _buildSubtitle(),
+                    const SizedBox(height: 8),
+                    _buildTags(),
+                    if (!isCompact) ...[
+                      const SizedBox(height: 8),
+                      _buildActionButton(context),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

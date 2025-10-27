@@ -7,6 +7,8 @@ import '../providers/meal_plan_provider.dart';
 import '../utils/app_theme.dart';
 import '../services/share_service.dart';
 import 'meal_selection_dialog.dart';
+import '../widgets/animation_widgets.dart';
+import '../widgets/error_widgets.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final Recipe recipe;

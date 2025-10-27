@@ -7,6 +7,9 @@ import '../utils/app_theme.dart';
 import '../utils/constants.dart';
 import 'recipe_detail_screen.dart';
 import 'ai_suggestion_screen.dart';
+import '../widgets/skeleton_widgets.dart';
+import '../widgets/animation_widgets.dart';
+import '../widgets/error_widgets.dart';
 
 class RecipeListScreen extends StatefulWidget {
   const RecipeListScreen({super.key});
