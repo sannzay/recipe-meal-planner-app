@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/recipe_model.dart';
 import '../providers/meal_plan_provider.dart';
+import '../providers/recipe_provider.dart';
 import '../utils/app_theme.dart';
 import '../utils/constants.dart';
 
 class MealSelectionDialog extends StatefulWidget {
   final Recipe recipe;
-  final Function(String mealType, DateTime date) onMealSelected;
+  final Function(String mealType, DateTime date, String recipeId) onMealSelected;
 
   const MealSelectionDialog({
     super.key,
@@ -22,11 +24,18 @@ class MealSelectionDialog extends StatefulWidget {
 class _MealSelectionDialogState extends State<MealSelectionDialog> {
   DateTime _selectedDate = DateTime.now();
   String _selectedMealType = MealTypes.breakfast;
+  Recipe? _selectedRecipe;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = context.read<MealPlanProvider>().selectedDate;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.8,
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(
@@ -42,11 +51,11 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildRecipeInfo(),
-                  const SizedBox(height: 24),
                   _buildDateSelector(),
                   const SizedBox(height: 24),
                   _buildMealTypeSelector(),
+                  const SizedBox(height: 24),
+                  _buildRecipeSelector(),
                   const SizedBox(height: 32),
                   _buildActionButtons(),
                 ],
@@ -81,70 +90,6 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecipeInfo() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Theme.of(context).dividerColor,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey[300],
-            ),
-            child: widget.recipe.imageUrl != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      widget.recipe.imageUrl!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => const Icon(
-                        Icons.restaurant,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  )
-                : const Icon(
-                    Icons.restaurant,
-                    color: Colors.grey,
-                  ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.recipe.name,
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${widget.recipe.prepTime + widget.recipe.cookTime} min • ${widget.recipe.difficulty}',
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -210,7 +155,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: MealTypes.allTypes.map((mealType) {
+          children: MealTypes.allTypes.take(3).map((mealType) {
             final isSelected = _selectedMealType == mealType;
             return InkWell(
               onTap: () {
@@ -249,6 +194,119 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
     );
   }
 
+  Widget _buildRecipeSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Select Recipe',
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Consumer<RecipeProvider>(
+          builder: (context, recipeProvider, child) {
+            return Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+              child: ListView.builder(
+                itemCount: recipeProvider.recipes.length,
+                itemBuilder: (context, index) {
+                  final recipe = recipeProvider.recipes[index];
+                  final isSelected = _selectedRecipe?.id == recipe.id;
+                  
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _selectedRecipe = recipe;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isSelected 
+                            ? AppTheme.primaryColor.withOpacity(0.1)
+                            : Colors.transparent,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey[300],
+                            ),
+                            child: recipe.imageUrl != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CachedNetworkImage(
+                                      imageUrl: recipe.imageUrl!,
+                                      fit: BoxFit.cover,
+                                      errorWidget: (context, url, error) => const Icon(
+                                        Icons.restaurant,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.restaurant,
+                                    color: Colors.grey,
+                                  ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  recipe.name,
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.medium,
+                                  ),
+                                ),
+                                Text(
+                                  '${recipe.prepTime + recipe.cookTime} min • ${recipe.difficulty}',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (isSelected)
+                            const Icon(
+                              Icons.check_circle,
+                              color: AppTheme.primaryColor,
+                            ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   Widget _buildActionButtons() {
     return Row(
       children: [
@@ -273,7 +331,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
         const SizedBox(width: 16),
         Expanded(
           child: ElevatedButton(
-            onPressed: _addToMealPlan,
+            onPressed: _selectedRecipe != null ? _addToMealPlan : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.primaryColor,
               foregroundColor: Colors.white,
@@ -318,7 +376,9 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
   }
 
   void _addToMealPlan() {
-    widget.onMealSelected(_selectedMealType, _selectedDate);
-    Navigator.of(context).pop();
+    if (_selectedRecipe != null) {
+      widget.onMealSelected(_selectedMealType, _selectedDate, _selectedRecipe!.id);
+      Navigator.of(context).pop();
+    }
   }
 }

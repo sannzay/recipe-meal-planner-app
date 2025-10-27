@@ -47,8 +47,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
       backgroundColor: Colors.transparent,
       builder: (context) => MealSelectionDialog(
         recipe: widget.recipe,
-        onMealSelected: (mealType, date) {
-          context.read<MealPlanProvider>().addMealToPlan(date, mealType, widget.recipe.id);
+        onMealSelected: (mealType, date, recipeId) {
+          context.read<MealPlanProvider>().addMealToPlan(date, mealType, recipeId);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Added ${widget.recipe.name} to $mealType'),
