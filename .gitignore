@@ -43,3 +43,20 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+.vscode/settings.json
+.gitignore
+Recipe & Meal Planning App -  Project Proposal.pdf
+UI_SCREENS/stitch_splash_screen/splash_screen/code.html
+UI_SCREENS/stitch_splash_screen/splash_screen/splash.png
+UI_SCREENS/stitch_splash_screen 2/favourites_screen/code.html
+UI_SCREENS/stitch_splash_screen 2/favourites_screen/screen7.png
+UI_SCREENS/stitch_splash_screen 3/favourites_screen/code.html
+UI_SCREENS/stitch_splash_screen 3/favourites_screen/favorites.png
+UI_SCREENS/stitch_splash_screen 4/grocery_list/code.html
+UI_SCREENS/stitch_splash_screen 4/grocery_list/grocery.png
+UI_SCREENS/stitch_splash_screen 5/meal_planner/code.html
+UI_SCREENS/stitch_splash_screen 5/meal_planner/planner.png
+UI_SCREENS/stitch_splash_screen 6/recipe_detail_screen/code.html
+UI_SCREENS/stitch_splash_screen 6/recipe_detail_screen/recipie_detail.png
+UI_SCREENS/stitch_splash_screen 7/home/recipe_list/code.html
+UI_SCREENS/stitch_splash_screen 7/home/recipe_list/recipie.png
