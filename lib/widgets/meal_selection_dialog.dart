@@ -25,6 +25,8 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
   DateTime _selectedDate = DateTime.now();
   String _selectedMealType = MealTypes.breakfast;
   Recipe? _selectedRecipe;
+  String _searchQuery = '';
+  List<String> _activeFilters = [];
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height * 0.9,
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(
@@ -45,6 +47,8 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
       child: Column(
         children: [
           _buildHeader(),
+          _buildSearchBar(),
+          _buildFilterChips(),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -92,6 +96,91 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: TextField(
+        onChanged: (value) {
+          setState(() {
+            _searchQuery = value;
+          });
+        },
+        decoration: InputDecoration(
+          hintText: 'Search recipes...',
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: _searchQuery.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _searchQuery = '';
+                    });
+                  },
+                )
+              : null,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: Theme.of(context).dividerColor,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: Theme.of(context).dividerColor,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(
+              color: AppTheme.primaryColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterChips() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: DietaryTags.allTags.map((tag) {
+            final isSelected = _activeFilters.contains(tag);
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: FilterChip(
+                label: Text(tag),
+                selected: isSelected,
+                onSelected: (selected) {
+                  setState(() {
+                    if (selected) {
+                      _activeFilters.add(tag);
+                    } else {
+                      _activeFilters.remove(tag);
+                    }
+                  });
+                },
+                backgroundColor: Theme.of(context).cardColor,
+                selectedColor: AppTheme.primaryColor.withOpacity(0.2),
+                checkmarkColor: AppTheme.primaryColor,
+                labelStyle: GoogleFonts.plusJakartaSans(
+                  fontSize: 12,
+                  fontWeight: FontWeight.medium,
+                  color: isSelected 
+                      ? AppTheme.primaryColor 
+                      : Theme.of(context).textTheme.bodyMedium?.color,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -208,6 +297,8 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
         const SizedBox(height: 12),
         Consumer<RecipeProvider>(
           builder: (context, recipeProvider, child) {
+            final filteredRecipes = _getFilteredRecipes(recipeProvider.recipes);
+            
             return Container(
               height: 200,
               decoration: BoxDecoration(
@@ -217,94 +308,155 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
                   color: Theme.of(context).dividerColor,
                 ),
               ),
-              child: ListView.builder(
-                itemCount: recipeProvider.recipes.length,
-                itemBuilder: (context, index) {
-                  final recipe = recipeProvider.recipes[index];
-                  final isSelected = _selectedRecipe?.id == recipe.id;
-                  
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        _selectedRecipe = recipe;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: isSelected 
-                            ? AppTheme.primaryColor.withOpacity(0.1)
-                            : Colors.transparent,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                          ),
-                        ),
-                      ),
-                      child: Row(
+              child: filteredRecipes.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[300],
-                            ),
-                            child: recipe.imageUrl != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: recipe.imageUrl!,
-                                      fit: BoxFit.cover,
-                                      errorWidget: (context, url, error) => const Icon(
-                                        Icons.restaurant,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  )
-                                : const Icon(
-                                    Icons.restaurant,
-                                    color: Colors.grey,
-                                  ),
+                          Icon(
+                            Icons.search_off,
+                            size: 48,
+                            color: Colors.grey[400],
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(height: 8),
+                          Text(
+                            'No recipes found',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredRecipes.length,
+                      itemBuilder: (context, index) {
+                        final recipe = filteredRecipes[index];
+                        final isSelected = _selectedRecipe?.id == recipe.id;
+                        
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              _selectedRecipe = recipe;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: isSelected 
+                                  ? AppTheme.primaryColor.withOpacity(0.1)
+                                  : Colors.transparent,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                            ),
+                            child: Row(
                               children: [
-                                Text(
-                                  recipe.name,
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.medium,
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.grey[300],
+                                  ),
+                                  child: recipe.imageUrl != null
+                                      ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: CachedNetworkImage(
+                                            imageUrl: recipe.imageUrl!,
+                                            fit: BoxFit.cover,
+                                            errorWidget: (context, url, error) => const Icon(
+                                              Icons.restaurant,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        )
+                                      : const Icon(
+                                          Icons.restaurant,
+                                          color: Colors.grey,
+                                        ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        recipe.name,
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.medium,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${recipe.prepTime + recipe.cookTime} min • ${recipe.difficulty}',
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                      if (recipe.dietaryTags.isNotEmpty)
+                                        Wrap(
+                                          spacing: 4,
+                                          children: recipe.dietaryTags.take(2).map((tag) {
+                                            return Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                              decoration: BoxDecoration(
+                                                color: AppTheme.primaryColor.withOpacity(0.1),
+                                                borderRadius: BorderRadius.circular(4),
+                                              ),
+                                              child: Text(
+                                                tag,
+                                                style: GoogleFonts.plusJakartaSans(
+                                                  fontSize: 10,
+                                                  color: AppTheme.primaryColor,
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                    ],
                                   ),
                                 ),
-                                Text(
-                                  '${recipe.prepTime + recipe.cookTime} min • ${recipe.difficulty}',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 12,
-                                    color: Colors.grey[600],
+                                if (isSelected)
+                                  const Icon(
+                                    Icons.check_circle,
+                                    color: AppTheme.primaryColor,
                                   ),
-                                ),
                               ],
                             ),
                           ),
-                          if (isSelected)
-                            const Icon(
-                              Icons.check_circle,
-                              color: AppTheme.primaryColor,
-                            ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             );
           },
         ),
       ],
     );
+  }
+
+  List<Recipe> _getFilteredRecipes(List<Recipe> recipes) {
+    var filtered = recipes;
+
+    if (_searchQuery.isNotEmpty) {
+      filtered = filtered.where((recipe) {
+        return recipe.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+               recipe.description.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+               recipe.category.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
+    }
+
+    if (_activeFilters.isNotEmpty) {
+      filtered = filtered.where((recipe) {
+        return _activeFilters.every((filter) => recipe.dietaryTags.contains(filter));
+      }).toList();
+    }
+
+    return filtered;
   }
 
   Widget _buildActionButtons() {
