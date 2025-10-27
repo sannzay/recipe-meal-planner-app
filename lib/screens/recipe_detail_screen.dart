@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/recipe_model.dart';
+import '../models/ingredient_model.dart';
 import '../providers/recipe_provider.dart';
 import '../providers/meal_plan_provider.dart';
 import '../utils/app_theme.dart';
+import '../utils/constants.dart';
 import '../services/share_service.dart';
-import 'meal_selection_dialog.dart';
+import '../widgets/meal_selection_dialog.dart';
 import '../widgets/animation_widgets.dart';
 import '../widgets/error_widgets.dart';
 
@@ -24,7 +27,6 @@ class RecipeDetailScreen extends StatefulWidget {
 
 class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   final List<bool> _ingredientChecked = [];
-  final ShareService _shareService = ShareService();
 
   @override
   void initState() {
@@ -39,7 +41,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
   }
 
   void _onShareRecipe() {
-    _shareService.shareRecipe(widget.recipe);
+    ShareService.shareRecipe(widget.recipe);
   }
 
   void _onAddToMealPlan() {

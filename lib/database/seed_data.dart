@@ -1,4 +1,3 @@
-import 'dart:convert';
 import '../models/recipe_model.dart';
 import '../models/ingredient_model.dart';
 import '../database/recipe_repository.dart';
@@ -180,9 +179,11 @@ class DatabaseSeeder {
 
   Future<bool> isDatabaseHealthy() async {
     try {
-      return await _databaseHelper.isDatabaseHealthy();
+      final db = await _databaseHelper.database;
+      await db.rawQuery('SELECT 1');
+      return true;
     } catch (e) {
-      ErrorHandler.logError('Error checking database health', e);
+      ErrorHandler.logError('Database health check failed', e);
       return false;
     }
   }
@@ -190,8 +191,9 @@ class DatabaseSeeder {
   Future<void> optimizeDatabase() async {
     try {
       ErrorHandler.logInfo('Optimizing database...');
-      await _databaseHelper.vacuumDatabase();
-      await _databaseHelper.analyzeDatabase();
+      final db = await _databaseHelper.database;
+      await db.execute('VACUUM');
+      await db.execute('ANALYZE');
       ErrorHandler.logInfo('Database optimization completed successfully!');
     } catch (e) {
       ErrorHandler.logError('Error optimizing database', e);
@@ -211,6 +213,7 @@ class DatabaseSeeder {
       
       // In a real app, you would save this to a file or cloud storage
       ErrorHandler.logInfo('Database backup created with ${recipes.length} recipes');
+      ErrorHandler.logInfo('Backup data: ${backupData['timestamp']}');
     } catch (e) {
       ErrorHandler.logError('Error creating database backup', e);
       rethrow;
