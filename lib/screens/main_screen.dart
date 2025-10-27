@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../providers/theme_provider.dart';
 import '../utils/app_theme.dart';
+import '../utils/ui_polish_constants.dart';
+import '../utils/ui_helpers.dart';
+import '../widgets/polished_widgets.dart';
 import 'recipe_list_screen.dart';
 import 'meal_planner_screen.dart';
 import 'grocery_list_screen.dart';
@@ -51,31 +56,62 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
-        return Scaffold(
+        return PolishedScaffold(
           body: IndexedStack(
             index: _currentIndex,
             children: _screens,
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-            selectedItemColor: AppTheme.primaryColor,
-            unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-            selectedLabelStyle: GoogleFonts.plusJakartaSans(
-              fontSize: 12,
-              fontWeight: FontWeight.medium,
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, -2),
+                ),
+              ],
             ),
-            unselectedLabelStyle: GoogleFonts.plusJakartaSans(
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
+            child: BottomNavigationBar(
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+                // Haptic feedback for better UX
+                HapticFeedback.lightImpact();
+              },
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              selectedItemColor: AppTheme.primaryColor,
+              unselectedItemColor: Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
+              selectedLabelStyle: GoogleFonts.plusJakartaSans(
+                fontSize: UIPolishConstants.fontSizeS,
+                fontWeight: FontWeight.w500,
+              ),
+              unselectedLabelStyle: GoogleFonts.plusJakartaSans(
+                fontSize: UIPolishConstants.fontSizeS,
+                fontWeight: FontWeight.normal,
+              ),
+              items: _navItems.map((item) {
+                return BottomNavigationBarItem(
+                  icon: Container(
+                    padding: const EdgeInsets.all(UIPolishConstants.spacingS),
+                    child: item.icon,
+                  ),
+                  activeIcon: Container(
+                    padding: const EdgeInsets.all(UIPolishConstants.spacingS),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(UIPolishConstants.radiusM),
+                    ),
+                    child: item.activeIcon,
+                  ),
+                  label: item.label,
+                );
+              }).toList(),
             ),
-            items: _navItems,
           ),
         );
       },

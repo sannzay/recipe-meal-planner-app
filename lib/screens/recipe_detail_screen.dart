@@ -227,7 +227,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           label,
           style: GoogleFonts.plusJakartaSans(
             fontSize: 12,
-            fontWeight: FontWeight.medium,
+            fontWeight: FontWeight.w500,
             color: Theme.of(context).textTheme.bodyMedium?.color,
           ),
         ),
@@ -272,7 +272,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             title,
             style: GoogleFonts.plusJakartaSans(
               fontSize: 14,
-              fontWeight: FontWeight.medium,
+              fontWeight: FontWeight.w500,
               color: Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
@@ -318,7 +318,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             final index = entry.key;
             final ingredient = entry.value;
             return _buildIngredientItem(index, ingredient);
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -392,7 +392,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
             final index = entry.key;
             final instruction = entry.value;
             return _buildInstructionStep(index + 1, instruction);
-          }).toList(),
+          }),
         ],
       ),
     );

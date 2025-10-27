@@ -26,11 +26,9 @@ class AppTheme {
         primary: primaryColor,
         secondary: secondaryColor,
         surface: cardLight,
-        background: backgroundLight,
         onPrimary: textLight,
         onSecondary: textLight,
         onSurface: textLight,
-        onBackground: textLight,
         outline: borderLight,
       ),
       textTheme: GoogleFonts.plusJakartaSansTextTheme().apply(
@@ -48,7 +46,7 @@ class AppTheme {
           color: textLight,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardLight,
         elevation: 2,
         shadowColor: Colors.black.withOpacity(0.1),
@@ -100,7 +98,7 @@ class AppTheme {
         selectedColor: primaryColor,
         labelStyle: GoogleFonts.plusJakartaSans(
           color: textLight,
-          fontWeight: FontWeight.medium,
+          fontWeight: FontWeight.w500,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -170,7 +168,7 @@ class AppTheme {
           color: textDark,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardDark,
         elevation: 2,
         shadowColor: Colors.black.withOpacity(0.3),
@@ -222,7 +220,7 @@ class AppTheme {
         selectedColor: primaryColor,
         labelStyle: GoogleFonts.plusJakartaSans(
           color: textDark,
-          fontWeight: FontWeight.medium,
+          fontWeight: FontWeight.w500,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

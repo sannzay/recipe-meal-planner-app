@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/recipe_model.dart';
 import '../providers/meal_plan_provider.dart';
 import '../providers/recipe_provider.dart';
@@ -172,7 +173,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
                 checkmarkColor: AppTheme.primaryColor,
                 labelStyle: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
-                  fontWeight: FontWeight.medium,
+                  fontWeight: FontWeight.w500,
                   color: isSelected 
                       ? AppTheme.primaryColor 
                       : Theme.of(context).textTheme.bodyMedium?.color,
@@ -269,7 +270,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
                   mealType.toUpperCase(),
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                     color: isSelected 
                         ? Colors.white 
                         : Theme.of(context).textTheme.bodyMedium?.color,
@@ -388,7 +389,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
                                         recipe.name,
                                         style: GoogleFonts.plusJakartaSans(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.medium,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                       Text(
@@ -475,7 +476,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
               'Cancel',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -496,7 +497,7 @@ class _MealSelectionDialogState extends State<MealSelectionDialog> {
               'Add to Plan',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
