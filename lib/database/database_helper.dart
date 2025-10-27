@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import '../services/error_handling_service.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -12,18 +13,54 @@ class DatabaseHelper {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
+    try {
+      _database = await _initDatabase();
+      return _database!;
+    } catch (e) {
+      ErrorHandler.logError('Failed to initialize database', e);
+      rethrow;
+    }
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), _databaseName);
-    return await openDatabase(
-      path,
-      version: _databaseVersion,
-      onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
-    );
+    try {
+      String path = join(await getDatabasesPath(), _databaseName);
+      
+      return await openDatabase(
+        path,
+        version: _databaseVersion,
+        onCreate: _onCreate,
+        onUpgrade: _onUpgrade,
+        onOpen: _onOpen,
+        onConfigure: _onConfigure,
+      );
+    } catch (e) {
+      ErrorHandler.logError('Database initialization failed', e);
+      rethrow;
+    }
+  }
+
+  Future<void> _onConfigure(Database db) async {
+    try {
+      await db.execute('PRAGMA foreign_keys = ON');
+      await db.execute('PRAGMA journal_mode = WAL');
+      await db.execute('PRAGMA synchronous = NORMAL');
+      await db.execute('PRAGMA cache_size = 1000');
+      await db.execute('PRAGMA temp_store = MEMORY');
+    } catch (e) {
+      ErrorHandler.logError('Database configuration failed', e);
+      rethrow;
+    }
+  }
+
+  Future<void> _onOpen(Database db) async {
+    try {
+      ErrorHandler.logInfo('Database opened successfully');
+      await db.execute('PRAGMA foreign_keys = ON');
+    } catch (e) {
+      ErrorHandler.logError('Database open configuration failed', e);
+      rethrow;
+    }
   }
 
   Future<void> _onCreate(Database db, int version) async {

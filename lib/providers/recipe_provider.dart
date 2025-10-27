@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../models/recipe_model.dart';
 import '../database/recipe_repository.dart';
+import '../services/error_handling_service.dart';
 
 class RecipeProvider with ChangeNotifier {
   final RecipeRepository _recipeRepository = RecipeRepository();
@@ -22,12 +23,17 @@ class RecipeProvider with ChangeNotifier {
     notifyListeners();
     
     try {
-      _recipes = await _recipeRepository.getAllRecipes();
+      _recipes = await ErrorHandler.handleDatabaseOperation(
+        () => _recipeRepository.getAllRecipes(),
+        operationName: 'loadRecipes',
+        fallbackValue: <Recipe>[],
+      );
       _applyFilters();
+      ErrorHandler.logInfo('Recipes loaded successfully: ${_recipes.length} recipes');
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading recipes: $e');
-      }
+      ErrorHandler.logError('Failed to load recipes', e);
+      _recipes = [];
+      _filteredRecipes = [];
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -69,7 +75,10 @@ class RecipeProvider with ChangeNotifier {
 
   Future<void> toggleFavorite(String recipeId) async {
     try {
-      await _recipeRepository.toggleFavorite(recipeId);
+      await ErrorHandler.handleDatabaseOperation(
+        () => _recipeRepository.toggleFavorite(recipeId),
+        operationName: 'toggleFavorite',
+      );
       
       final recipeIndex = _recipes.indexWhere((r) => r.id == recipeId);
       if (recipeIndex != -1) {
@@ -86,10 +95,9 @@ class RecipeProvider with ChangeNotifier {
       }
       
       notifyListeners();
+      ErrorHandler.logInfo('Recipe favorite toggled successfully: $recipeId');
     } catch (e) {
-      if (kDebugMode) {
-        print('Error toggling favorite: $e');
-      }
+      ErrorHandler.logError('Failed to toggle favorite for recipe: $recipeId', e);
     }
   }
 
