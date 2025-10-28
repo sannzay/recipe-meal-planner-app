@@ -1,4 +1,4 @@
-# 🍳 Recipe & Meal Planning App
+# 🍳 AI Recipe & Meal Planning App
 
 <div align="center">
 
@@ -278,31 +278,23 @@ The app integrates with OpenRouter API to provide intelligent recipe suggestions
 - [x] Recipe list with grid view and filtering
 - [x] Dietary filters (Vegetarian, Vegan, Gluten-Free, etc.)
 - [x] Recipe detail view with ingredients and instructions
-- [x] Favorites functionality with instant updates
+- [x] Favorites functionality
 - [x] Weekly meal planner with visual calendar
 - [x] Grocery list with category grouping
 - [x] Smart grocery list generation from meal plans
 - [x] Share recipe and grocery list functionality
 - [x] Local SQLite storage with data persistence
 - [x] Dark/Light mode support
-- [x] Advanced search functionality
 
 ### Bonus Features ✅
 - [x] AI-powered recipe suggestions with OpenRouter
-- [x] Comprehensive settings screen
 - [x] Multiple dietary preference support
-- [x] Metric/Imperial units toggle
-- [x] Beautiful UI matching Material Design 3
-- [x] Smooth animations and transitions
-- [x] Comprehensive error handling and empty states
-- [x] Offline functionality
-- [x] Responsive design for tablets
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License
 
 ---
 
@@ -312,7 +304,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by Sanjay Reddy Choudapur**
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/recipe-meal-planner-app?style=social)](https://github.com/yourusername/recipe-meal-planner-app)
-[![GitHub forks](https://img.shields.io/github/forks/yourusername/recipe-meal-planner-app?style=social)](https://github.com/yourusername/recipe-meal-planner-app)
+[![GitHub stars](https://img.shields.io/github/stars/sannzay/recipe-meal-planner-app?style=social)](https://github.com/sannzay/recipe-meal-planner-app)
+[![GitHub forks](https://img.shields.io/github/forks/sannzay/recipe-meal-planner-app?style=social)](https://github.com/sannzay/recipe-meal-planner-app)
 
 </div>
