@@ -324,10 +324,25 @@ class GroceryProvider with ChangeNotifier {
 
   Future<void> clearCheckedItems() async {
     try {
-      await _groceryRepository.clearCheckedItems();
-      _items.removeWhere((item) => item.isChecked);
-      _updateCategoryMap();
-      notifyListeners();
+      if (kDebugMode) {
+        print('Starting clearCheckedItems - Current items count: ${_items.length}');
+        print('Checked items count: ${checkedItems.length}');
+        print('Checked items: ${checkedItems.map((item) => '${item.name} (${item.isChecked})').join(', ')}');
+      }
+      
+      final deletedCount = await _groceryRepository.clearCheckedItems();
+      
+      if (kDebugMode) {
+        print('Database delete operation returned: $deletedCount items deleted');
+      }
+      
+      // Reload items from database to ensure UI is in sync
+      await loadItems();
+      
+      if (kDebugMode) {
+        print('After reload - Items count: ${_items.length}');
+        print('After reload - Checked items count: ${checkedItems.length}');
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Error clearing checked items: $e');
@@ -338,9 +353,8 @@ class GroceryProvider with ChangeNotifier {
   Future<void> clearAllItems() async {
     try {
       await _groceryRepository.clearAllItems();
-      _items.clear();
-      _itemsByCategory.clear();
-      notifyListeners();
+      // Reload items from database to ensure UI is in sync
+      await loadItems();
     } catch (e) {
       if (kDebugMode) {
         print('Error clearing all items: $e');

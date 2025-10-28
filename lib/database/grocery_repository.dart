@@ -111,11 +111,27 @@ class GroceryRepository {
 
   Future<int> clearCheckedItems() async {
     final db = await _databaseHelper.database;
-    return await db.delete(
+    
+    // First, let's see how many checked items exist
+    final checkedItems = await db.query(
       'grocery_items',
       where: 'is_checked = ?',
       whereArgs: [1],
     );
+    
+    print('Found ${checkedItems.length} checked items in database');
+    for (final item in checkedItems) {
+      print('Checked item: ${item['name']} (id: ${item['id']})');
+    }
+    
+    final result = await db.delete(
+      'grocery_items',
+      where: 'is_checked = ?',
+      whereArgs: [1],
+    );
+    
+    print('Database delete operation completed. Rows affected: $result');
+    return result;
   }
 
   Future<int> clearAllItems() async {
