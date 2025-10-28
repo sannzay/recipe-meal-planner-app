@@ -9,7 +9,7 @@ class DatabaseHelper {
 
   static Database? _database;
   static const String _databaseName = 'recipe_meal_planner.db';
-  static const int _databaseVersion = 1;
+  static const int _databaseVersion = 2;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -67,28 +67,18 @@ class DatabaseHelper {
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         description TEXT NOT NULL,
-        image_url TEXT,
-        prep_time INTEGER NOT NULL,
-        cook_time INTEGER NOT NULL,
+        imageUrl TEXT,
+        prepTime INTEGER NOT NULL,
+        cookTime INTEGER NOT NULL,
         servings INTEGER NOT NULL,
         difficulty TEXT NOT NULL,
         category TEXT NOT NULL,
-        dietary_tags TEXT NOT NULL,
-        is_favorite INTEGER NOT NULL DEFAULT 0,
-        created_at INTEGER NOT NULL,
-        updated_at INTEGER NOT NULL
-      )
-    ''');
-
-    await db.execute('''
-      CREATE TABLE ingredients (
-        id TEXT PRIMARY KEY,
-        recipe_id TEXT NOT NULL,
-        name TEXT NOT NULL,
-        quantity TEXT NOT NULL,
-        unit TEXT NOT NULL,
-        category TEXT NOT NULL,
-        FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE
+        dietaryTags TEXT NOT NULL,
+        ingredients TEXT NOT NULL,
+        instructions TEXT NOT NULL,
+        isFavorite INTEGER NOT NULL DEFAULT 0,
+        createdAt INTEGER NOT NULL,
+        updatedAt INTEGER NOT NULL
       )
     ''');
 
@@ -115,10 +105,6 @@ class DatabaseHelper {
     ''');
 
     await db.execute('''
-      CREATE INDEX idx_ingredients_recipe_id ON ingredients(recipe_id)
-    ''');
-
-    await db.execute('''
       CREATE INDEX idx_meal_plans_date ON meal_plans(date)
     ''');
 
@@ -133,11 +119,13 @@ class DatabaseHelper {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < newVersion) {
+      // Drop all tables and recreate with new schema
       await db.execute('DROP TABLE IF EXISTS grocery_items');
       await db.execute('DROP TABLE IF EXISTS meal_plans');
       await db.execute('DROP TABLE IF EXISTS ingredients');
       await db.execute('DROP TABLE IF EXISTS recipes');
       await _onCreate(db, newVersion);
+      ErrorHandler.logInfo('Database upgraded from version $oldVersion to $newVersion');
     }
   }
 

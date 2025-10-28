@@ -107,6 +107,7 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "ai_suggestions_fab",
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -235,37 +236,36 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      recipe.name,
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Flexible(
+                      child: Text(
+                        recipe.name,
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${recipe.prepTime + recipe.cookTime} min • ${recipe.difficulty.toUpperCase()}',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10,
+                        color: Colors.grey[600],
+                      ),
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      '${recipe.prepTime + recipe.cookTime} min',
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    Text(
-                      recipe.difficulty.toUpperCase(),
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const Spacer(),
                     SizedBox(
                       width: double.infinity,
+                      height: 28,
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).push(
@@ -277,15 +277,17 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppTheme.primaryColor,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
                           'View Recipe',
                           style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
+                            fontSize: 10,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

@@ -73,6 +73,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "add_grocery_fab",
         onPressed: _showAddItemDialog,
         backgroundColor: AppTheme.primaryColor,
         child: const Icon(Icons.add, color: Colors.white),

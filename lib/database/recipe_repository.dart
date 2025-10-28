@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import '../models/recipe_model.dart';
-import '../models/ingredient_model.dart';
 import 'database_helper.dart';
 
 class RecipeRepository {
@@ -8,47 +7,17 @@ class RecipeRepository {
 
   Future<int> insertRecipe(Recipe recipe) async {
     final db = await _databaseHelper.database;
-    
-    await db.transaction((txn) async {
-      await txn.insert('recipes', recipe.toMap());
-      
-      for (final ingredient in recipe.ingredients) {
-        await txn.insert('ingredients', {
-          ...ingredient.toMap(),
-          'recipe_id': recipe.id,
-        });
-      }
-    });
-    
-    return 1;
+    return await db.insert('recipes', recipe.toMap());
   }
 
   Future<int> updateRecipe(Recipe recipe) async {
     final db = await _databaseHelper.database;
-    
-    await db.transaction((txn) async {
-      await txn.update(
-        'recipes',
-        recipe.toMap(),
-        where: 'id = ?',
-        whereArgs: [recipe.id],
-      );
-      
-      await txn.delete(
-        'ingredients',
-        where: 'recipe_id = ?',
-        whereArgs: [recipe.id],
-      );
-      
-      for (final ingredient in recipe.ingredients) {
-        await txn.insert('ingredients', {
-          ...ingredient.toMap(),
-          'recipe_id': recipe.id,
-        });
-      }
-    });
-    
-    return 1;
+    return await db.update(
+      'recipes',
+      recipe.toMap(),
+      where: 'id = ?',
+      whereArgs: [recipe.id],
+    );
   }
 
   Future<int> deleteRecipe(String id) async {
@@ -71,36 +40,13 @@ class RecipeRepository {
     
     if (recipeMaps.isEmpty) return null;
     
-    final ingredientMaps = await db.query(
-      'ingredients',
-      where: 'recipe_id = ?',
-      whereArgs: [id],
-    );
-    
-    final recipe = Recipe.fromMap(recipeMaps.first);
-    final ingredients = ingredientMaps.map((map) => Ingredient.fromMap(map)).toList();
-    
-    return recipe.copyWith(ingredients: ingredients);
+    return Recipe.fromMap(recipeMaps.first);
   }
 
   Future<List<Recipe>> getAllRecipes() async {
     final db = await _databaseHelper.database;
-    
-    final recipeMaps = await db.query('recipes', orderBy: 'created_at DESC');
-    final List<Recipe> recipes = [];
-    
-    for (final recipeMap in recipeMaps) {
-      final recipe = Recipe.fromMap(recipeMap);
-      final ingredientMaps = await db.query(
-        'ingredients',
-        where: 'recipe_id = ?',
-        whereArgs: [recipe.id],
-      );
-      final ingredients = ingredientMaps.map((map) => Ingredient.fromMap(map)).toList();
-      recipes.add(recipe.copyWith(ingredients: ingredients));
-    }
-    
-    return recipes;
+    final recipeMaps = await db.query('recipes', orderBy: 'createdAt DESC');
+    return recipeMaps.map((map) => Recipe.fromMap(map)).toList();
   }
 
   Future<List<Recipe>> getRecipesByDietaryTags(List<String> tags) async {
@@ -112,22 +58,15 @@ class RecipeRepository {
     for (final tag in tags) {
       final recipeMaps = await db.query(
         'recipes',
-        where: 'dietary_tags LIKE ?',
+        where: 'dietaryTags LIKE ?',
         whereArgs: ['%$tag%'],
-        orderBy: 'created_at DESC',
+        orderBy: 'createdAt DESC',
       );
       
       for (final recipeMap in recipeMaps) {
         final recipe = Recipe.fromMap(recipeMap);
-        final ingredientMaps = await db.query(
-          'ingredients',
-          where: 'recipe_id = ?',
-          whereArgs: [recipe.id],
-        );
-        final ingredients = ingredientMaps.map((map) => Ingredient.fromMap(map)).toList();
-        
         if (!recipes.any((r) => r.id == recipe.id)) {
-          recipes.add(recipe.copyWith(ingredients: ingredients));
+          recipes.add(recipe);
         }
       }
     }
@@ -140,25 +79,12 @@ class RecipeRepository {
     
     final recipeMaps = await db.query(
       'recipes',
-      where: 'is_favorite = ?',
+      where: 'isFavorite = ?',
       whereArgs: [1],
-      orderBy: 'created_at DESC',
+      orderBy: 'createdAt DESC',
     );
     
-    final List<Recipe> recipes = [];
-    
-    for (final recipeMap in recipeMaps) {
-      final recipe = Recipe.fromMap(recipeMap);
-      final ingredientMaps = await db.query(
-        'ingredients',
-        where: 'recipe_id = ?',
-        whereArgs: [recipe.id],
-      );
-      final ingredients = ingredientMaps.map((map) => Ingredient.fromMap(map)).toList();
-      recipes.add(recipe.copyWith(ingredients: ingredients));
-    }
-    
-    return recipes;
+    return recipeMaps.map((map) => Recipe.fromMap(map)).toList();
   }
 
   Future<int> toggleFavorite(String id) async {
@@ -169,7 +95,7 @@ class RecipeRepository {
     
     return await db.update(
       'recipes',
-      {'is_favorite': recipe.isFavorite ? 0 : 1},
+      {'isFavorite': recipe.isFavorite ? 0 : 1},
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -182,24 +108,11 @@ class RecipeRepository {
     
     final recipeMaps = await db.query(
       'recipes',
-      where: 'name LIKE ? OR description LIKE ? OR category LIKE ?',
-      whereArgs: ['%$query%', '%$query%', '%$query%'],
-      orderBy: 'created_at DESC',
+      where: 'name LIKE ? OR description LIKE ?',
+      whereArgs: ['%$query%', '%$query%'],
+      orderBy: 'createdAt DESC',
     );
     
-    final List<Recipe> recipes = [];
-    
-    for (final recipeMap in recipeMaps) {
-      final recipe = Recipe.fromMap(recipeMap);
-      final ingredientMaps = await db.query(
-        'ingredients',
-        where: 'recipe_id = ?',
-        whereArgs: [recipe.id],
-      );
-      final ingredients = ingredientMaps.map((map) => Ingredient.fromMap(map)).toList();
-      recipes.add(recipe.copyWith(ingredients: ingredients));
-    }
-    
-    return recipes;
+    return recipeMaps.map((map) => Recipe.fromMap(map)).toList();
   }
 }

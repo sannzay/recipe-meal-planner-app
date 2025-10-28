@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'ingredient_model.dart';
 
 class Recipe {
@@ -47,7 +48,7 @@ class Recipe {
       'difficulty': difficulty,
       'category': category,
       'dietaryTags': dietaryTags.join(','),
-      'ingredients': ingredients.map((x) => x.toMap()).toList(),
+      'ingredients': jsonEncode(ingredients.map((x) => x.toMap()).toList()),
       'instructions': instructions.join('|||'),
       'isFavorite': isFavorite ? 1 : 0,
       'createdAt': createdAt.millisecondsSinceEpoch,
@@ -70,7 +71,10 @@ class Recipe {
           ? (map['dietaryTags'] as String).split(',').where((s) => s.isNotEmpty).toList()
           : [],
       ingredients: map['ingredients'] != null
-          ? List<Ingredient>.from(map['ingredients'].map((x) => Ingredient.fromMap(x)))
+          ? List<Ingredient>.from(
+              (jsonDecode(map['ingredients']) as List)
+                  .map((x) => Ingredient.fromMap(x))
+            )
           : [],
       instructions: map['instructions'] != null
           ? (map['instructions'] as String).split('|||').where((s) => s.isNotEmpty).toList()
