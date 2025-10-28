@@ -178,11 +178,17 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           ),
           Consumer<RecipeProvider>(
             builder: (context, recipeProvider, child) {
+              // Get the updated recipe from the provider
+              final updatedRecipe = recipeProvider.recipes.firstWhere(
+                (recipe) => recipe.id == widget.recipe.id,
+                orElse: () => widget.recipe,
+              );
+              
               return _buildActionButton(
-                icon: widget.recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
+                icon: updatedRecipe.isFavorite ? Icons.favorite : Icons.favorite_border,
                 label: 'Save',
                 onTap: _onFavoriteToggle,
-                isActive: widget.recipe.isFavorite,
+                isActive: updatedRecipe.isFavorite,
               );
             },
           ),
