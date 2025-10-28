@@ -1,6 +1,6 @@
 class ApiConfig {
   // OpenRouter API key for AI recipe suggestions
-  static const String openRouterApiKey = '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';
+  static const String openRouterApiKey = 'Your OpenRouter API key here';
   static const String openRouterBaseUrl = 'https://openrouter.ai/api/v1';
   static const String defaultModel = 'anthropic/claude-3-haiku';
   static const int maxTokens = 2000;
