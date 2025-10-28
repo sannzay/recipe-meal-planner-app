@@ -1,4 +1,4 @@
-# 🍳 AI Recipe & Meal Planning App
+# 🍳 AI Recipe & Meal Planning App (With Dark Mode)
 
 <div align="center">
 
@@ -8,7 +8,11 @@
 ![AI](https://img.shields.io/badge/AI-OpenRouter-FF6B6B?style=for-the-badge)
 
 *A comprehensive Flutter application for recipe management, meal planning, and intelligent grocery list generation*
-![Meal](assets/images/add_to_meal.png) 
+<p align="center">
+  <img src="assets/images/add_to_meal.png" alt="Add to Meal" width="250">
+  <img src="assets/images/ask_ai.png" alt="Ask AI" width="250">
+  <img src="assets/images/ai_suggestions.png" alt="AI Suggestions" width="250">
+</p>
 
 </div>
 
