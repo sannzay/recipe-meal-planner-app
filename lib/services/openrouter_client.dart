@@ -34,6 +34,9 @@ class OpenRouterClient {
 
       if (kDebugMode) {
         print('[OpenRouter] Response status: ${response.statusCode}');
+        if (response.statusCode != 200) {
+          print('[OpenRouter] Error response body: ${response.body}');
+        }
       }
 
       if (response.statusCode == 200) {
@@ -42,7 +45,7 @@ class OpenRouterClient {
       } else if (response.statusCode == 429) {
         throw RateLimitException('Rate limit exceeded. Please try again later.');
       } else if (response.statusCode == 401) {
-        throw AuthenticationException('Invalid API key');
+        throw AuthenticationException('Invalid API key. Please check your OpenRouter API key in lib/config/api_config.dart');
       } else if (response.statusCode == 402) {
         throw InsufficientCreditsException('Insufficient credits. Please check your OpenRouter balance.');
       } else {
