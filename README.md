@@ -45,10 +45,10 @@
 ## 🎥 Project Presentation
 
 ### 📊 Presentation Slides
-**[View Project Presentation Slides](https://your-presentation-link.com)**
+**[View Project Presentation Slides](https://www.canva.com/design/DAG3C7z9XMY/YnQYKk0VSPQD4uSzRY47AQ/edit?utm_content=DAG3C7z9XMY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)**
 
 ### 🎬 YouTube Explanation
-**[Watch Project Explanation Video](https://your-youtube-link.com)**
+**[Watch Project Explanation Video](https://youtu.be/5QMDqu8G-bE)**
 
 ---
 
