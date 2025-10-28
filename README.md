@@ -8,6 +8,7 @@
 ![AI](https://img.shields.io/badge/AI-OpenRouter-FF6B6B?style=for-the-badge)
 
 *A comprehensive Flutter application for recipe management, meal planning, and intelligent grocery list generation*
+![Meal](assets/images/add_to_meal.png) 
 
 </div>
 
@@ -145,11 +146,11 @@ This app provides a unified platform that:
 
 | Home Screen | Recipe Detail | Meal Planner |
 |-------------|---------------|--------------|
-| ![Home](assets/screenshots/home.png) | ![Detail](assets/screenshots/detail.png) | ![Meal Plan](assets/screenshots/meal_plan.png) |
+| ![Home](assets/images/home_screen.png) | ![Detail](assets/images/recipie.png) | ![Meal Plan](assets/images/planning.png) |
 
-| Grocery List | AI Suggestions | Settings |
+| Grocery List | AI Ask | AI Suggestions |
 |---------------|----------------|----------|
-| ![Grocery](assets/screenshots/grocery.png) | ![AI](assets/screenshots/ai.png) | ![Settings](assets/screenshots/settings.png) |
+| ![Grocery](assets/images/grocery_list.png) | ![AI](assets/images/ask_ai.png) | ![AI](assets/images/ai_suggestions.png) |
 
 </div>
 
