@@ -216,7 +216,11 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           child: IconButton(
             icon: Icon(
               icon,
-              color: isActive ? Colors.white : AppTheme.textMain,
+              color: isActive 
+                  ? Colors.white 
+                  : (Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.white70 
+                      : AppTheme.primaryColor),
               size: 24,
             ),
             onPressed: onTap,

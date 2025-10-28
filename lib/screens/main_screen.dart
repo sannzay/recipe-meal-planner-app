@@ -10,6 +10,7 @@ import '../widgets/polished_widgets.dart';
 import 'recipe_list_screen.dart';
 import 'meal_planner_screen.dart';
 import 'grocery_list_screen.dart';
+import 'favorites_screen.dart';
 import 'settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
     const RecipeListScreen(),
     const MealPlannerScreen(),
     const GroceryListScreen(),
+    const FavoritesScreen(),
     const SettingsScreen(),
   ];
 
@@ -44,6 +46,11 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.shopping_cart_outlined),
       activeIcon: Icon(Icons.shopping_cart),
       label: 'Grocery List',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.favorite_outline),
+      activeIcon: Icon(Icons.favorite),
+      label: 'Favorites',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.settings_outlined),
