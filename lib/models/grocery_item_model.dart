@@ -24,8 +24,8 @@ class GroceryItem {
       'quantity': quantity,
       'unit': unit,
       'category': category,
-      'isChecked': isChecked ? 1 : 0,
-      'fromRecipeId': fromRecipeId,
+      'is_checked': isChecked ? 1 : 0,
+      'from_recipe_id': fromRecipeId,
     };
   }
 
@@ -36,8 +36,8 @@ class GroceryItem {
       quantity: map['quantity'] ?? '',
       unit: map['unit'] ?? '',
       category: map['category'] ?? '',
-      isChecked: map['isChecked'] == 1,
-      fromRecipeId: map['fromRecipeId'],
+      isChecked: map['is_checked'] == 1,
+      fromRecipeId: map['from_recipe_id'],
     );
   }
 

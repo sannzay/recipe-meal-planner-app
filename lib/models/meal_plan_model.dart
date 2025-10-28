@@ -15,8 +15,8 @@ class MealPlan {
     return {
       'id': id,
       'date': date.millisecondsSinceEpoch,
-      'mealType': mealType,
-      'recipeId': recipeId,
+      'meal_type': mealType,
+      'recipe_id': recipeId,
     };
   }
 
@@ -24,8 +24,8 @@ class MealPlan {
     return MealPlan(
       id: map['id'] ?? '',
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] ?? 0),
-      mealType: map['mealType'] ?? '',
-      recipeId: map['recipeId'] ?? '',
+      mealType: map['meal_type'] ?? '',
+      recipeId: map['recipe_id'] ?? '',
     );
   }
 
