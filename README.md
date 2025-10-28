@@ -13,6 +13,42 @@
 
 ---
 
+## 📋 Table of Contents
+
+- [👨‍💻 Developer Information](#-developer-information)
+- [🎥 Project Presentation](#-project-presentation)
+- [🎯 Project Overview](#-project-overview)
+- [✨ Key Features](#-key-features)
+- [🛠️ Technology Stack](#️-technology-stack)
+- [📱 Screenshots](#-screenshots)
+- [🚀 Getting Started](#-getting-started)
+- [📊 Project Structure](#-project-structure)
+- [🤖 AI Integration](#-ai-integration)
+- [📈 Features Breakdown](#-features-breakdown)
+- [📄 License](#-license)
+
+
+---
+
+## 👨‍💻 Developer Information
+
+**Developer**: Sanjay Reddy Choudapur  
+**Panther ID**: 002900942   
+
+---
+
+## 🎥 Project Presentation
+
+### 📊 Presentation Slides
+**[View Project Presentation Slides](https://your-presentation-link.com)**
+
+### 🎬 YouTube Explanation
+**[Watch Project Explanation Video](https://your-youtube-link.com)**
+
+---
+
+
+
 ## 🎯 Project Overview
 
 The **Recipe & Meal Planning App** is a comprehensive mobile application designed to revolutionize how users manage their cooking and meal planning. Built with Flutter, this app combines traditional recipe management with modern AI-powered suggestions to create an intelligent cooking companion.
@@ -34,27 +70,6 @@ This app provides a unified platform that:
 - Offers AI-powered recipe suggestions based on available ingredients
 - Supports comprehensive dietary filtering and preferences
 
----
-
----
-
-## 🎥 Project Presentation
-
-### 📊 Presentation Slides
-**[View Project Presentation Slides](https://your-presentation-link.com)**
-
-### 🎬 YouTube Explanation
-**[Watch Project Explanation Video](https://your-youtube-link.com)**
-
----
-
-## 👨‍💻 Developer Information
-
-**Developer**: Sanjay Reddy Choudapur  
-**Panther ID**: 002900942  
-**Email**: [your-email@student.gsu.edu](mailto:your-email@student.gsu.edu)  
-**GitHub**: [@yourusername](https://github.com/yourusername)  
-**LinkedIn**: [Sanjay Reddy Choudapur](https://linkedin.com/in/yourprofile)
 
 ---
 
