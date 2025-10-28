@@ -167,7 +167,7 @@ This app provides a unified platform that:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/recipe-meal-planner-app.git
+   git clone https://github.com/sannzay/recipe-meal-planner-app.git
    cd recipe-meal-planner-app
    ```
 
@@ -302,7 +302,7 @@ This project is licensed under the MIT License
 
 ### 🌟 Star this repository if you found it helpful!
 
-**Built with ❤️ by Sanjay Reddy Choudapur**
+**Built with ❤️ by Sanjay Reddy**
 
 [![GitHub stars](https://img.shields.io/github/stars/sannzay/recipe-meal-planner-app?style=social)](https://github.com/sannzay/recipe-meal-planner-app)
 [![GitHub forks](https://img.shields.io/github/forks/sannzay/recipe-meal-planner-app?style=social)](https://github.com/sannzay/recipe-meal-planner-app)
