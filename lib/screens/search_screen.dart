@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import '../providers/recipe_provider.dart';
 import '../models/recipe_model.dart';
@@ -314,7 +315,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               recipe.name,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14,
-                                fontWeight: FontWeight.medium,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             Text(
@@ -361,7 +362,7 @@ class _SearchScreenState extends State<SearchScreen> {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
                 color: AppTheme.primaryColor,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -379,7 +380,7 @@ class _SearchScreenState extends State<SearchScreen> {
             '$count recipe${count != 1 ? 's' : ''} found',
             style: GoogleFonts.plusJakartaSans(
               fontSize: 16,
-              fontWeight: FontWeight.medium,
+              fontWeight: FontWeight.w500,
               color: Colors.grey[600],
             ),
           ),

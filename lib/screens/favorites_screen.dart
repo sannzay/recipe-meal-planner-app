@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../providers/recipe_provider.dart';
 import '../models/recipe_model.dart';
 import '../utils/app_theme.dart';
@@ -137,7 +138,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               'Explore Recipes',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -364,7 +365,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 10,
                                 color: AppTheme.primaryColor,
-                                fontWeight: FontWeight.medium,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           );

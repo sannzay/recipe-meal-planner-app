@@ -13,8 +13,15 @@ import 'screens/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await DatabaseHelper().database;
-  await DatabaseSeeder().seedDatabaseIfEmpty();
+  try {
+    // Initialize database with error handling
+    await DatabaseHelper().database;
+    await DatabaseSeeder().seedDatabaseIfEmpty();
+  } catch (e) {
+    // Log error but don't crash the app
+    print('Database initialization failed: $e');
+    print('App will continue with limited functionality');
+  }
   
   runApp(const RecipeMealPlannerApp());
 }

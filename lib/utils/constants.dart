@@ -287,7 +287,7 @@ class SampleRecipes {
       'servings': 4,
       'difficulty': 'easy',
       'category': 'american',
-      'dietaryTags': [DietaryTags.meat, 'gluten-free'],
+      'dietaryTags': ['meat', 'gluten-free'],
       'ingredients': [
         {'name': 'Chicken breast', 'quantity': '2', 'unit': 'lbs', 'category': 'meat'},
         {'name': 'Romaine lettuce', 'quantity': '2', 'unit': 'heads', 'category': 'produce'},
@@ -447,7 +447,7 @@ class SampleRecipes {
       'servings': 4,
       'difficulty': 'easy',
       'category': 'asian',
-      'dietaryTags': [DietaryTags.meat, 'gluten-free'],
+      'dietaryTags': ['meat', 'gluten-free'],
       'ingredients': [
         {'name': 'Beef sirloin', 'quantity': '1', 'unit': 'lb', 'category': 'meat'},
         {'name': 'Broccoli', 'quantity': '2', 'unit': 'cups', 'category': 'produce'},
@@ -705,7 +705,7 @@ class SampleRecipes {
       'servings': 6,
       'difficulty': 'medium',
       'category': 'indian',
-      'dietaryTags': [DietaryTags.meat, 'gluten-free'],
+      'dietaryTags': ['meat', 'gluten-free'],
       'ingredients': [
         {'name': 'Chicken thighs', 'quantity': '2', 'unit': 'lbs', 'category': 'meat'},
         {'name': 'Tomato sauce', 'quantity': '28', 'unit': 'oz', 'category': 'canned'},
@@ -830,7 +830,7 @@ class SampleRecipes {
       'servings': 4,
       'difficulty': 'medium',
       'category': 'asian',
-      'dietaryTags': [DietaryTags.meat, 'gluten-free'],
+      'dietaryTags': ['meat', 'gluten-free'],
       'ingredients': [
         {'name': 'Short-grain rice', 'quantity': '2', 'unit': 'cups', 'category': 'grains'},
         {'name': 'Beef', 'quantity': '1', 'unit': 'lb', 'category': 'meat'},

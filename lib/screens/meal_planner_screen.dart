@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../providers/meal_plan_provider.dart';
 import '../providers/recipe_provider.dart';
 import '../models/meal_plan_model.dart';
@@ -112,7 +113,7 @@ class _MealPlannerScreenState extends State<MealPlannerScreen> {
                     dayName,
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 14,
-                      fontWeight: FontWeight.medium,
+                      fontWeight: FontWeight.w500,
                       color: isSelected 
                           ? AppTheme.primaryColor 
                           : Theme.of(context).textTheme.bodyMedium?.color,
@@ -313,7 +314,7 @@ class _MealPlannerScreenState extends State<MealPlannerScreen> {
                   'Details',
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 12,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -337,7 +338,7 @@ class _MealPlannerScreenState extends State<MealPlannerScreen> {
                       'Add',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 12,
-                        fontWeight: FontWeight.medium,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

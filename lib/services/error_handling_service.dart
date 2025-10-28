@@ -47,38 +47,8 @@ class ErrorHandler {
   }
 
   static String _getDatabaseErrorMessage(DatabaseException error) {
-    switch (error.resultCode) {
-      case DatabaseException.sqliteConstraint:
-        return 'Data constraint violation. Please check your input.';
-      case DatabaseException.sqliteCorrupt:
-        return 'Database corruption detected. Please restart the app.';
-      case DatabaseException.sqliteFull:
-        return 'Database is full. Please free up some space.';
-      case DatabaseException.sqliteNotFound:
-        return 'Database not found. Please reinstall the app.';
-      case DatabaseException.sqliteNotADatabase:
-        return 'Invalid database file. Please reinstall the app.';
-      case DatabaseException.sqliteBusy:
-        return 'Database is busy. Please try again.';
-      case DatabaseException.sqliteLocked:
-        return 'Database is locked. Please try again.';
-      case DatabaseException.sqliteReadOnly:
-        return 'Database is read-only. Please check permissions.';
-      case DatabaseException.sqliteInterrupt:
-        return 'Database operation interrupted. Please try again.';
-      case DatabaseException.sqliteIOErr:
-        return 'Database I/O error. Please check storage.';
-      case DatabaseException.sqlitePerm:
-        return 'Database permission denied. Please check permissions.';
-      case DatabaseException.sqliteAbort:
-        return 'Database operation aborted. Please try again.';
-      case DatabaseException.sqliteTooBig:
-        return 'Data too large for database. Please reduce size.';
-      case DatabaseException.sqliteMisuse:
-        return 'Database misuse error. Please restart the app.';
-      default:
-        return 'Database error occurred. Please try again.';
-    }
+    // Handle database errors with a generic message for now
+    return 'Database error occurred. Please try again.';
   }
 
   static Future<T> handleDatabaseOperation<T>(

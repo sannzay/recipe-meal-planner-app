@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/grocery_item_model.dart';
 import '../utils/app_theme.dart';
 
@@ -87,7 +88,7 @@ class _GroceryCategorySectionState extends State<GroceryCategorySection> {
               '$completedCount/$totalCount',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
                 color: AppTheme.primaryColor,
               ),
             ),
@@ -142,7 +143,7 @@ class _GroceryCategorySectionState extends State<GroceryCategorySection> {
                   item.name,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 16,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                     decoration: item.isChecked 
                         ? TextDecoration.lineThrough 
                         : TextDecoration.none,

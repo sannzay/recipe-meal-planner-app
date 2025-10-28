@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_theme.dart';
 
 class EmptyStateWidget extends StatelessWidget {
@@ -69,7 +70,7 @@ class EmptyStateWidget extends StatelessWidget {
                   actionText!,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 16,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),

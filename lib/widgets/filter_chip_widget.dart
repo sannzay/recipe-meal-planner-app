@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../utils/app_theme.dart';
 
 class FilterChipWidget extends StatelessWidget {
@@ -52,7 +53,7 @@ class FilterChipWidget extends StatelessWidget {
               label,
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
                 color: isSelected ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color,
               ),
             ),

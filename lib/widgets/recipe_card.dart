@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/recipe_model.dart';
 import '../utils/app_theme.dart';
 import '../utils/constants.dart';
@@ -200,7 +201,7 @@ class RecipeCard extends StatelessWidget {
             style: GoogleFonts.plusJakartaSans(
               fontSize: 10,
               color: AppTheme.primaryColor,
-              fontWeight: FontWeight.medium,
+              fontWeight: FontWeight.w500,
             ),
           ),
         );
@@ -225,7 +226,7 @@ class RecipeCard extends StatelessWidget {
           'View Recipe',
           style: GoogleFonts.plusJakartaSans(
             fontSize: 12,
-            fontWeight: FontWeight.medium,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

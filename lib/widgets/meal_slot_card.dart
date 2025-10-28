@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/meal_plan_model.dart';
 import '../models/recipe_model.dart';
 import '../providers/recipe_provider.dart';
@@ -164,7 +165,7 @@ class MealSlotCard extends StatelessWidget {
                   'Details',
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 12,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -188,7 +189,7 @@ class MealSlotCard extends StatelessWidget {
                       'Add',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 12,
-                        fontWeight: FontWeight.medium,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

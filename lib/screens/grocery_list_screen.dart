@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../providers/grocery_provider.dart';
 import '../providers/meal_plan_provider.dart';
 import '../models/grocery_item_model.dart';
@@ -122,7 +123,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
               'Generate from Meal Plan',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -144,7 +145,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
                 'Generate from Meal Plan',
                 style: GoogleFonts.plusJakartaSans(
                   fontSize: 14,
-                  fontWeight: FontWeight.medium,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               style: ElevatedButton.styleFrom(
@@ -165,7 +166,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
               'Clear Done',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
             ),
             style: OutlinedButton.styleFrom(
@@ -228,7 +229,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
                   '$completedCount/$totalCount',
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                     color: AppTheme.primaryColor,
                   ),
                 ),
@@ -277,7 +278,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
                   item.name,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 16,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                     decoration: item.isChecked 
                         ? TextDecoration.lineThrough 
                         : TextDecoration.none,

@@ -42,11 +42,9 @@ class DatabaseHelper {
 
   Future<void> _onConfigure(Database db) async {
     try {
+      // Simplified database configuration for better compatibility
       await db.execute('PRAGMA foreign_keys = ON');
-      await db.execute('PRAGMA journal_mode = WAL');
-      await db.execute('PRAGMA synchronous = NORMAL');
-      await db.execute('PRAGMA cache_size = 1000');
-      await db.execute('PRAGMA temp_store = MEMORY');
+      // Remove problematic PRAGMA statements that cause issues on some devices
     } catch (e) {
       ErrorHandler.logError('Database configuration failed', e);
       rethrow;
@@ -56,7 +54,7 @@ class DatabaseHelper {
   Future<void> _onOpen(Database db) async {
     try {
       ErrorHandler.logInfo('Database opened successfully');
-      await db.execute('PRAGMA foreign_keys = ON');
+      // Database is already configured in _onConfigure
     } catch (e) {
       ErrorHandler.logError('Database open configuration failed', e);
       rethrow;

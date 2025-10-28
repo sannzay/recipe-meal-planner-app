@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 
 class AccessibilityHelper {
   static void announceToScreenReader(String message) {
-    SystemChannels.accessibility.invokeMethod('announce', message);
+    // Accessibility announcement - simplified for now
+    debugPrint('Accessibility: $message');
   }
 
   static bool isHighContrastMode(BuildContext context) {

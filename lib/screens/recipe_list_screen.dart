@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../providers/recipe_provider.dart';
 import '../models/recipe_model.dart';
 import '../utils/app_theme.dart';
@@ -49,7 +50,7 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void _onSearchChanged(String query) {
-    context.read<RecipeProvider>().searchRecipes(query);
+    context.read<RecipeProvider>().updateSearchQuery(query);
   }
 
   Future<void> _onRefresh() async {
@@ -146,7 +147,7 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
               checkmarkColor: AppTheme.primaryColor,
               labelStyle: GoogleFonts.plusJakartaSans(
                 color: isSelected ? AppTheme.primaryColor : Colors.grey[700],
-                fontWeight: FontWeight.medium,
+                fontWeight: FontWeight.w500,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -285,7 +286,7 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
                           'View Recipe',
                           style: GoogleFonts.plusJakartaSans(
                             fontSize: 12,
-                            fontWeight: FontWeight.medium,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -361,7 +362,7 @@ class RecipeSearchDelegate extends SearchDelegate<String> {
   Widget buildResults(BuildContext context) {
     return Consumer<RecipeProvider>(
       builder: (context, recipeProvider, child) {
-        final recipes = recipeProvider.searchRecipes(query);
+        final recipes = recipeProvider.filteredRecipes;
         
         if (recipes.isEmpty) {
           return const Center(
@@ -403,7 +404,7 @@ class RecipeSearchDelegate extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     return Consumer<RecipeProvider>(
       builder: (context, recipeProvider, child) {
-        final recipes = recipeProvider.searchRecipes(query);
+        final recipes = recipeProvider.filteredRecipes;
         
         return ListView.builder(
           itemCount: recipes.length,

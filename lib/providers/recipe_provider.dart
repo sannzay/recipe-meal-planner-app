@@ -45,7 +45,7 @@ class RecipeProvider with ChangeNotifier {
     _applyFilters();
   }
 
-  Future<void> searchRecipes(String query) async {
+  void updateSearchQuery(String query) {
     _searchQuery = query;
     _applyFilters();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/ingredient_model.dart';
 import '../utils/app_theme.dart';
 
@@ -36,7 +37,7 @@ class IngredientCheckbox extends StatelessWidget {
                   ingredient.name,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 16,
-                    fontWeight: FontWeight.medium,
+                    fontWeight: FontWeight.w500,
                     decoration: isChecked 
                         ? TextDecoration.lineThrough 
                         : TextDecoration.none,
@@ -71,7 +72,7 @@ class IngredientCheckbox extends StatelessWidget {
                 style: GoogleFonts.plusJakartaSans(
                   fontSize: 10,
                   color: AppTheme.primaryColor,
-                  fontWeight: FontWeight.medium,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
